@@ -1,73 +1,94 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+/**
+ * titre: Test mathématiques
+ * description: application qui permet de réaliser 3 calculs mathématiques : permutation, arrangement et combinaison
+ * auteur: 
+ * date création: 13/06/2020
+ * date dernière modification: 08/03/2023
+ */
 
 namespace Denombrements
 {
     class Program
     {
+        static int Permutation (int a, int b)
+        {
+            int resultat =1;
+            for (int i=a; i<=b; i++)
+            {
+                resultat *= i;
+            }
+            return resultat;
+        }
         static void Main(string[] args)
         {
-            int c = 1;
-            while (c != 0)
+            string c = "1";
+            while (c != "0")
             {
                 Console.WriteLine("Permutation ...................... 1");
                 Console.WriteLine("Arrangement ...................... 2");
                 Console.WriteLine("Combinaison ...................... 3");
                 Console.WriteLine("Quitter .......................... 0");
                 Console.Write("Choix :                            ");
-                c = int.Parse(Console.ReadLine());
+                c = Console.ReadLine();
+                int total = 0;
+                int n=0;
+                int resultatPermutation, resultatArrangement, numerateurCombinaison, denominateurCombinaison;
 
-                if (c == 0) { Environment.Exit(0); }
+                //Saisie du nombre d'éléments à gérer
+                if (c != "0")
+                {
+                    Console.Write("nombre total d'éléments à gérer = ");
+                    total = int.Parse(Console.ReadLine());
+                }
 
-                if (c == 1)
+                switch (c)
                 {
-                    Console.Write("nombre total d'éléments à gérer = "); // le nombre d'éléments à gérer
-                    int n = int.Parse(Console.ReadLine()); // saisir le nombre
-                                                           // calcul de r
-                    long r = 1;
-                    for (int k = 1; k <= n; k++)
-                        r *= k;
-                    Console.WriteLine(n + "! = " + r);
+                    case "0":
+                        break;
+                    case "1": //Permutation
+                        // Calcul du résultat
+                        resultatPermutation = Permutation(1, total);
+                        Console.WriteLine(total + "! = " + resultatPermutation);
+                        break;
+
+                    case "2": //Arrangement
+
+                        //Saisir du nombre d'éléments dans le sous-ensemble
+                        Console.Write("nombre d'éléments dans le sous ensemble = "); 
+                        n = int.Parse(Console.ReadLine()); 
+
+                        // Calcul du résultat
+                        resultatArrangement = Permutation(total - n + 1, total);
+
+                        //Affichage résultat
+                        Console.WriteLine("A(" + total + "/" + n + ") = " + resultatArrangement);
+                        break;
+
+                    case "3": //Combinaison
+
+                        //Saisir du nombre d'éléments dans le sous-ensemble
+                        Console.Write("nombre d'éléments dans le sous ensemble = "); 
+                        n = int.Parse(Console.ReadLine());
+
+                        //Initialisation et calcul du numerateur
+                        numerateurCombinaison = Permutation(total - n + 1, total);
+                            
+                        // Calcul du dénominateur
+                        denominateurCombinaison= Permutation(1, n);
+                            
+                        //Affichage résultat
+                        Console.WriteLine("C(" + total + "/" + n + ") = " + (numerateurCombinaison / denominateurCombinaison));
+                        break;
+
+                    default:
+                        Console.WriteLine("ERREUR: erreur de saisie.");
+                        break;
+
                 }
-                else
-                {
-                    if (c == 2)
-                    {
-                        Console.Write("nombre total d'éléments à gérer = "); // le nombre d'éléments à gérer
-                        int t = int.Parse(Console.ReadLine()); // saisir le nombre
-                        Console.Write("nombre d'éléments dans le sous ensemble = "); // le sous ensemble
-                        int n = int.Parse(Console.ReadLine()); // saisir le nombre
-                        // calcul de r
-                        long r = 1;
-                        for (int k = (t - n + 1); k <= t; k++)
-                            r *= k;
-                        //Console.WriteLine("résultat = " + (r1 / r2));
-                        Console.WriteLine("A(" + t + "/" + n + ") = " + r);
-                    }
-                    else
-                    {
-                        Console.Write("nombre total d'éléments à gérer = "); // le nombre d'éléments à gérer
-                        int t = int.Parse(Console.ReadLine()); // saisir le nombre
-                        Console.Write("nombre d'éléments dans le sous ensemble = "); // le sous ensemble
-                        int n = int.Parse(Console.ReadLine()); // saisir le nombre
-                        // calcul de r1
-                        long r1 = 1;
-                        for (int k = (t - n + 1); k <= t; k++)
-                            r1 *= k;
-                        // calcul de r2
-                        long r2 = 1;
-                        for (int k = 1; k <= n; k++)
-                            r2 *= k;
-                        // calcul de r3
-                        //Console.WriteLine("résultat = " + (r1 / r2));
-                        Console.WriteLine("C(" + t + "/" + n + ") = " + (r1 / r2));
-                    }
-                }
-            }
-            Console.ReadLine();
+
+            }   
         }
     }
 }
